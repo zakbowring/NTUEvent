@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.ntuevent.ui.home.HomeFragment"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_events"
+        android:name="com.example.ntuevent.ui.events.EventsFragment"
+        tools:layout="@layout/fragment_events" />
+    <fragment
+        android:id="@+id/nav_contact_us"
+        android:name="com.example.ntuevent.ui.contactUs.ContactUsFragment"
+        tools:layout="@layout/fragment_contact_us" />
+    <fragment
+        android:id="@+id/nav_navigation"
+        android:name="com.example.ntuevent.ui.navigation.NavigationFragment"
+        tools:layout="@layout/fragment_navigation" />
+    <fragment
+        android:id="@+id/nav_registration"
+        android:name="com.example.ntuevent.ui.registration.RegistrationFragment"
+        tools:layout="@layout/fragment_registration" />
+    <fragment
+        android:id="@+id/nav_qr_scanner"
+        android:name="com.example.ntuevent.ui.qrScanner.QRScannerFragment"
+        tools:layout="@layout/fragment_qr_scanner" />
+    <fragment
+        android:id="@+id/nav_stallholder_application"
+        android:name="com.example.ntuevent.ui.stallholderApplication.StallholderApplicationFragment"
+        tools:layout="@layout/fragment_stallholder_application" />
+    <fragment
+        android:id="@+id/nav_account"
+        android:name="com.example.ntuevent.ui.account.AccountFragment"
+        tools:layout="@layout/fragment_account" />
+    <fragment
+        android:id="@+id/fragment_event"
+        android:name="com.example.ntuevent.ui.events.Event.EventFragment"
+        tools:layout="@layout/event_fragment" />
+    <fragment
+        android:id="@+id/fragment_stallholder"
+        android:name="com.example.ntuevent.ui.events.Event.Stallholder.StallholderFragment"
+        tools:layout="@layout/stallholder_fragment" />
+
+</navigation>

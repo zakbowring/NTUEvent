@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_home"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_events"
+            android:icon="@drawable/ic_menu_events"
+            android:title="@string/menu_events" />
+        <item
+            android:id="@+id/nav_registration"
+            android:icon="@drawable/ic_menu_registration"
+            android:title="@string/menu_registration" />
+        <item
+            android:id="@+id/nav_navigation"
+            android:icon="@drawable/ic_menu_navigation"
+            android:title="@string/menu_navigation" />
+        <item
+            android:id="@+id/nav_qr_scanner"
+            android:icon="@drawable/ic_menu_qr_scanner"
+            android:title="@string/menu_qr_scanner" />
+        <item
+            android:id="@+id/nav_stallholder_application"
+            android:icon="@drawable/ic_menu_stallholder_application"
+            android:title="@string/menu_stallholder_application" />
+        <item
+            android:id="@+id/nav_contact_us"
+            android:icon="@drawable/ic_menu_contact_us"
+            android:title="@string/menu_contact_us" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_account"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Account"
+                android:enabled="false"/>
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/menu_send" />
+        </menu>
+    </item>
+
+</menu>

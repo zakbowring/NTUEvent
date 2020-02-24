@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "872291187105",
+    "firebase_url": "https://ntu-event.firebaseio.com",
+    "project_id": "ntu-event",
+    "storage_bucket": "ntu-event.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872291187105:android:5c53a07b9800e1c8f673e0",
+        "android_client_info": {
+          "package_name": "com.example.ntuevent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872291187105-t2agl36jbr8emjifn8jrloqtqck5ln22.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ntuevent",
+            "certificate_hash": "31218a79d2897a0f503189e91eb3cb84b5dc4757"
+          }
+        },
+        {
+          "client_id": "872291187105-itqktdqus658bidps9bm44s9peg5rd0m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAu5Wef_cG5cfY7nXC95FvyCQY5uIwsxiE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "872291187105-itqktdqus658bidps9bm44s9peg5rd0m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
