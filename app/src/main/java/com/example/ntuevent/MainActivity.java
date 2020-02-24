@@ -308,36 +308,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /* Updates the profile picture in the side navigation bar */
      private void updateSideNavBarProfilePicture(String profilePictureUrl, final View sideNavBarView) {
-         /* Get storage reference of event image */
-         final StorageReference firebaseStorage = FirebaseStorage.getInstance().getReference(profilePictureUrl);
+         /* Makes sure url is not empty */
+         if(profilePictureUrl != "") {
+             /* Get storage reference of event image */
+             final StorageReference firebaseStorage = FirebaseStorage.getInstance().getReference(profilePictureUrl);
 
-         /* Max file size */
-         final long TEN_MEGABYTE = 10240 * 10240;
+             /* Max file size */
+             final long TEN_MEGABYTE = 10240 * 10240;
 
-         /* Listener for getting image bytes */
-         firebaseStorage.getBytes(TEN_MEGABYTE)
-                 .addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                     @Override
-                     public void onSuccess(byte[] bytes) {
-                         /* Decode bytes into bitmap */
-                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+             /* Listener for getting image bytes */
+             firebaseStorage.getBytes(TEN_MEGABYTE)
+                     .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                         @Override
+                         public void onSuccess(byte[] bytes) {
+                             /* Decode bytes into bitmap */
+                             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
-                         /* Locate side nav bar profile picture imageView */
-                         ImageView sideNavBarProfilePicture = (ImageView)sideNavBarView.findViewById(R.id.sideNavBarProfilePicture);
+                             /* Locate side nav bar profile picture imageView */
+                             ImageView sideNavBarProfilePicture = (ImageView) sideNavBarView.findViewById(R.id.sideNavBarProfilePicture);
 
-                         /* Set new profile picture */
-                         sideNavBarProfilePicture.setImageBitmap(bitmap);
+                             /* Set new profile picture */
+                             sideNavBarProfilePicture.setImageBitmap(bitmap);
 
-                         /* Save bitmap to active user */
-                         activeUser.profilePicture = bitmap;
-                     }
-                 })
-         .addOnFailureListener(new OnFailureListener() {
-             @Override
-             public void onFailure(@NonNull Exception e) {
-                 Toast.makeText(getApplicationContext(), "Failed to load profile picture, error: " + e, Toast.LENGTH_SHORT).show();
-             }
-         });
+                             /* Save bitmap to active user */
+                             activeUser.profilePicture = bitmap;
+                         }
+                     })
+                     .addOnFailureListener(new OnFailureListener() {
+                         @Override
+                         public void onFailure(@NonNull Exception e) {
+                             Toast.makeText(getApplicationContext(), "Failed to load profile picture, error: " + e, Toast.LENGTH_SHORT).show();
+                         }
+                     });
+         }
      }
 
     private void enableAccountFragment(){
