@@ -68,6 +68,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -267,6 +268,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     activeUser.username = document.get("username").toString();
                                     activeUser.password = document.get("password").toString();
                                     activeUser.profilePictureURL = document.get("imageUrl").toString();
+                                    activeUser.linkedFiles = new ArrayList<>();
 
                                     enableAccountFragment();
                                     updateSideNavBarAccount(activeUser.username, activeUser.email, activeUser.profilePictureURL);
@@ -368,18 +370,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             activeUser.newProfilePictureUploaded = true;
 
             /* Get image */
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), activeUser.uriProfilePicture);
-
-                /* Retrieve profile picture view */
-                View accountView = findViewById(android.R.id.content).getRootView();
-                ImageView imageView = (ImageView)accountView.findViewById(R.id.account_profile_picture);
-
-                /* Set new profile picture on fragment */
-                imageView.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), activeUser.uriProfilePicture);
+//
+//                /* Retrieve profile picture view */
+//                View accountView = findViewById(android.R.id.content).getRootView();
+//                ImageView imageView = (ImageView)accountView.findViewById(R.id.account_profile_picture);
+//
+//                /* Set new profile picture on fragment */
+//                imageView.setImageBitmap(bitmap);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
 
         super.onActivityResult(requestCode,resultCode,data);

@@ -45,5 +45,9 @@
         android:id="@+id/fragment_stallholder"
         android:name="com.example.ntuevent.ui.events.Event.Stallholder.StallholderFragment"
         tools:layout="@layout/stallholder_fragment" />
+    <fragment
+        android:id="@+id/fragment_edit_account"
+        android:name="com.example.ntuevent.ui.account.EditAccountFragment.EditAccountFragment"
+        tools:layout="@layout/edit_account_fragment" />
 
 </navigation>

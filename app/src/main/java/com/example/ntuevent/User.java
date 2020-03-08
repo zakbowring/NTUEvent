@@ -4,13 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.view.View;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
+import java.util.List;
 
 public class User extends AppCompatActivity {
 
@@ -22,6 +19,7 @@ public class User extends AppCompatActivity {
     public Uri uriProfilePicture;
     public String profilePictureURL;
     public Bitmap profilePicture;
+    public List<String> linkedFiles;
 
     /* Flags */
     public boolean newProfilePictureUploaded = false;
