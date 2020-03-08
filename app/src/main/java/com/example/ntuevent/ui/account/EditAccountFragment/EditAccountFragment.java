@@ -21,10 +21,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ntuevent.MainActivity;
 import com.example.ntuevent.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +34,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.firestore.v1beta1.WriteResult;
 
 import org.w3c.dom.Text;
@@ -45,7 +50,7 @@ import java.util.Map;
 public class EditAccountFragment extends Fragment implements View.OnClickListener {
 
     private EditAccountViewModel mViewModel;
-    private List<String> fileUrisToAdd = new ArrayList<>();
+    private List<Uri> fileUrisToAdd = new ArrayList<>();
     private List<String> fileNamesToAdd = new ArrayList<>();
 
     public static EditAccountFragment newInstance() {
@@ -86,6 +91,7 @@ public class EditAccountFragment extends Fragment implements View.OnClickListene
         /* Set listeners */
         getView().findViewById(R.id.add_file_button).setOnClickListener(this);
         getView().findViewById(R.id.save_account_details_button).setOnClickListener(this);
+        getView().findViewById(R.id.select_new_profile_picture_button).setOnClickListener(this);
     }
 
     @Override
@@ -116,6 +122,8 @@ public class EditAccountFragment extends Fragment implements View.OnClickListene
                 break;
             case R.id.save_account_details_button:
                 saveAccountDetails();
+                break;
+            case R.id.select_new_profile_picture_button:
                 break;
         }
     }
@@ -160,7 +168,7 @@ public class EditAccountFragment extends Fragment implements View.OnClickListene
                     }
 
                     /* Store on lists to be added to the database */
-                    fileUrisToAdd.add(uri);
+                    fileUrisToAdd.add(data.getData());
                     fileNamesToAdd.add(fileName);
 
                     /* Add new file to checkbox list */
@@ -197,6 +205,9 @@ public class EditAccountFragment extends Fragment implements View.OnClickListene
         /* Check if there's files to be added */
         if(fileUrisToAdd.size() != 0 && fileNamesToAdd.size() != 0)
             addNewFilesToDatabase();
+
+        //Add remove files
+        //Return to previous page
     }
 
     private void updateUsername(final String editTextUsername){
@@ -245,6 +256,42 @@ public class EditAccountFragment extends Fragment implements View.OnClickListene
     }
 
     private void addNewFilesToDatabase(){
+        /* Function adds new files to database */
+        /* For each file to upload */
+        for(int i = 0; i < fileUrisToAdd.size(); i ++){
+            /* Get storage reference from uri */
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference("userFiles/" + MainActivity.activeUser.email + "/" + fileNamesToAdd.get(i));
 
+            /* String of filename for later use */
+            final String finalFileName = fileNamesToAdd.get(i);
+
+            /* Upload to storage */
+            storageReference.putFile(fileUrisToAdd.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    /* Once file has been added it needs adding to list in database */
+                    /* Get firebase path */
+                    String storagePath = taskSnapshot.getMetadata().getPath();
+
+                    /* Add Path to the database */
+                    /* Get Firebase Instance */
+                    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+                    /* Create map of new data */
+                    Map<String, Object> contents = new HashMap<>();
+                    contents.put("name", finalFileName);
+                    contents.put("fileUrl", storagePath);
+
+                    firebaseFirestore.collection("users").document(MainActivity.activeUser.email).collection("files")
+                            .document(finalFileName).set(contents).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            /* Add new file to active user */
+                            MainActivity.activeUser.linkedFiles.add(finalFileName);
+                        }
+                    });
+                }
+            });
+        }
     }
 }
