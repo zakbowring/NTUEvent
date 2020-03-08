@@ -268,7 +268,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     activeUser.username = document.get("username").toString();
                                     activeUser.password = document.get("password").toString();
                                     activeUser.profilePictureURL = document.get("imageUrl").toString();
-                                    activeUser.linkedFiles = new ArrayList<>();
 
                                     enableAccountFragment();
                                     updateSideNavBarAccount(activeUser.username, activeUser.email, activeUser.profilePictureURL);
@@ -280,6 +279,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         } else {
                             Toast.makeText(context.getApplicationContext(), "Firestore retireval failed", Toast.LENGTH_SHORT).show();
                         }
+                    }
+                });
+
+        firebaseFirestore.collection("users").document(MainActivity.activeUser.email.toLowerCase()).collection("files").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        activeUser.linkedFiles = new ArrayList<>();
+
+                        /* For each file attached to the user */
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            /* Get file name */
+                            activeUser.linkedFiles.add(document.get("name").toString());
+                    }
                     }
                 });
     }

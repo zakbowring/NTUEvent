@@ -91,7 +91,7 @@ public class EditAccountFragment extends Fragment implements View.OnClickListene
         /* Set listeners */
         getView().findViewById(R.id.add_file_button).setOnClickListener(this);
         getView().findViewById(R.id.save_account_details_button).setOnClickListener(this);
-        getView().findViewById(R.id.select_new_profile_picture_button).setOnClickListener(this);
+        getView().findViewById(R.id.add_new_profile_picture_button).setOnClickListener(this);
     }
 
     @Override
@@ -106,9 +106,9 @@ public class EditAccountFragment extends Fragment implements View.OnClickListene
         LinearLayout tempLinearLayout = (LinearLayout) view.findViewById(R.id.edit_account_linked_files_layout);
 
         /* Create line by line (file by file) */
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < MainActivity.activeUser.linkedFiles.size(); i++){
             CheckBox tempCheckBox = new CheckBox(getContext());
-            tempCheckBox.setText("Testing");
+            tempCheckBox.setText(MainActivity.activeUser.linkedFiles.get(i));
             tempCheckBox.setTextSize(18);
             tempLinearLayout.addView(tempCheckBox);
         }
@@ -123,7 +123,7 @@ public class EditAccountFragment extends Fragment implements View.OnClickListene
             case R.id.save_account_details_button:
                 saveAccountDetails();
                 break;
-            case R.id.select_new_profile_picture_button:
+            case R.id.add_new_profile_picture_button:
                 break;
         }
     }
