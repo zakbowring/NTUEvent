@@ -1,5 +1,6 @@
 package com.example.ntuevent.ui.account;
 
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -156,7 +157,11 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
 
         /* Update account profile picture */
         ImageView imageViewProfilePicture = (ImageView) view.findViewById(R.id.account_profile_picture);
-        imageViewProfilePicture.setImageBitmap(MainActivity.activeUser.profilePicture);
+
+        if(MainActivity.activeUser.profilePicture != null) {
+            imageViewProfilePicture.setImageBitmap(MainActivity.activeUser.profilePicture);
+            imageViewProfilePicture.setBackgroundResource(R.drawable.account_picture_bounds);
+        }
 
         /* Update password */
         TextView passwordTextView = (TextView) view.findViewById(R.id.account_password);
@@ -203,7 +208,19 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-//    private void uploadNewUserInfo(){
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        /* Update email */
+        TextView textViewEmail = (TextView) getView().findViewById(R.id.account_page_email);
+        textViewEmail.setText(MainActivity.activeUser.email);
+
+        /* Update username */
+        TextView textViewUsername = (TextView) getView().findViewById(R.id.account_username);
+    }
+
+    //    private void uploadNewUserInfo(){
 //        /* Retrieve username from editText */
 //        EditText editTextUsername = (EditText) getView().findViewById(R.id.account_username);
 //        String username = editTextUsername.getText().toString().trim();
