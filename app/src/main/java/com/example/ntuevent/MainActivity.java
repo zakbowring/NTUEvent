@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
@@ -75,6 +76,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, onLoginEventListener {
 
     private static final int CHOOSE_IMAGE = 101 ;
+    private static final int FINE_LOCATION_REQUEST_CODE = 1;
     private AppBarConfiguration mAppBarConfiguration;
     private FirebaseAuth mAuth;
 
@@ -411,5 +413,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return R.id.event_fragment_container;
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        switch(requestCode){
+            case FINE_LOCATION_REQUEST_CODE:
+                /* If it doesn't go through the results are empty */
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    /* Request has been successful */
+                    Toast.makeText(this, "Fine Location permissions enabled. Feature acessible.", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    /* Request has been unsuccessful */
+                    Toast.makeText(this, "To access this feature you must enable fine location.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
 }

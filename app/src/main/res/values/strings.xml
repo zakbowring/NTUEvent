@@ -32,4 +32,5 @@
     <string name="title_activity_google_maps">Map</string>
     <string name="navigation_event_text">If you would like to view the location of an event, please go to the event and click "Find on map".</string>
 
+    <string name="home_text">Welcome to Nottingham Trent University! We are one of the biggest institutions in the country, providing courses on everything from Veterinary Science to International Business Management. To support our current and prospective students we host numerous events throguhout the year open to everyone. This application is provided for you in order to support you experience at our events before, during and after.</string>
 </resources>

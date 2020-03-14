@@ -20,6 +20,10 @@ android {
     }
 }
 
+repositories{
+    jcenter()
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
@@ -46,4 +50,6 @@ dependencies {
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0@aar'
     implementation 'com.google.zxing:core:3.3.3'
+
+    implementation project(path: ':android-beacon-library-2.16.4')
 }
