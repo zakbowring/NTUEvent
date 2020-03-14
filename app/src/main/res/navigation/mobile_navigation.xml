@@ -30,10 +30,6 @@
         android:name="com.example.ntuevent.ui.qrScanner.QRScannerFragment"
         tools:layout="@layout/fragment_qr_scanner" />
     <fragment
-        android:id="@+id/nav_stallholder_application"
-        android:name="com.example.ntuevent.ui.stallholderApplication.StallholderApplicationFragment"
-        tools:layout="@layout/fragment_stallholder_application" />
-    <fragment
         android:id="@+id/nav_account"
         android:name="com.example.ntuevent.ui.account.AccountFragment"
         tools:layout="@layout/fragment_account" />

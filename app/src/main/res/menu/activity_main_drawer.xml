@@ -25,26 +25,18 @@
             android:icon="@drawable/ic_menu_qr_scanner"
             android:title="@string/menu_qr_scanner" />
         <item
-            android:id="@+id/nav_stallholder_application"
-            android:icon="@drawable/ic_menu_stallholder_application"
-            android:title="@string/menu_stallholder_application" />
-        <item
             android:id="@+id/nav_contact_us"
             android:icon="@drawable/ic_menu_contact_us"
             android:title="@string/menu_contact_us" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="User">
         <menu>
             <item
                 android:id="@+id/nav_account"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Account"
                 android:enabled="false"/>
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_send" />
         </menu>
     </item>
 

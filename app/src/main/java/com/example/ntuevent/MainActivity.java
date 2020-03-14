@@ -2,6 +2,7 @@ package com.example.ntuevent;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int FINE_LOCATION_REQUEST_CODE = 1;
     private AppBarConfiguration mAppBarConfiguration;
     private FirebaseAuth mAuth;
+    private MenuItem menuItem;
 
     /* Account popup */
     private PopupWindow accountPopupWindow;
@@ -103,8 +105,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_events, R.id.nav_navigation, R.id.nav_contact_us,
-                R.id.nav_registration, R.id.nav_stallholder_application, R.id.nav_qr_scanner,
-                R.id.nav_account, R.id.nav_send)
+                R.id.nav_registration, R.id.nav_qr_scanner,
+                R.id.nav_account)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -120,9 +122,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        if(item.getItemId() == R.id.account_login){
-            createAccountPopup();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        this.menuItem = item;
+
+        if (item.getItemId() == R.id.account_login) {
+            if (item.getTitle().equals("Logout")) {
+                /* Log the user out */
+                MainActivity.activeUser = null;
+                updateLoginButton("Login");
+                updateSideNavBarAccount("", "", "");
+                toggleAccountFragment(false);
+            } else {
+                createAccountPopup();
+            }
         }
         return false;
     }
@@ -271,8 +283,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     activeUser.password = document.get("password").toString();
                                     activeUser.profilePictureURL = document.get("imageUrl").toString();
 
-                                    enableAccountFragment();
+                                    toggleAccountFragment(true);
                                     updateSideNavBarAccount(activeUser.username, activeUser.email, activeUser.profilePictureURL);
+                                    updateLoginButton("Logout");
                                     signInPopupWindow.dismiss();
 
                                     break;
@@ -358,9 +371,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                          }
                      });
          }
+         else
+         {
+             /* Locate side nav bar profile picture imageView */
+             ImageView sideNavBarProfilePicture = (ImageView) sideNavBarView.findViewById(R.id.sideNavBarProfilePicture);
+
+             sideNavBarProfilePicture.setImageBitmap(BitmapFactory.decodeResource(this.getResources(),
+                     R.drawable.account_picture));
+
+             /* Set new profile picture */
+             sideNavBarProfilePicture.setBackgroundResource(R.drawable.account_picture);
+         }
      }
 
-    private void enableAccountFragment(){
+    private void toggleAccountFragment(Boolean state){
         /* Enables account option in side nav bar */
 
         /* Retrieve nav bar view */
@@ -373,7 +397,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MenuItem account_Item = navMenu.findItem(R.id.nav_account);
 
         /* Enable the option */
-        account_Item.setEnabled(true);
+        account_Item.setEnabled(state);
     }
 
 
@@ -431,5 +455,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
         }
+    }
+
+    private void updateLoginButton(String text){
+        menuItem.setTitle(text);
     }
 }
