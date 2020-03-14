@@ -283,6 +283,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     activeUser.password = document.get("password").toString();
                                     activeUser.profilePictureURL = document.get("imageUrl").toString();
 
+                                    /* Loads linked files information */
+                                    loadLinkedFiles();
+
                                     toggleAccountFragment(true);
                                     updateSideNavBarAccount(activeUser.username, activeUser.email, activeUser.profilePictureURL);
                                     updateLoginButton("Logout");
@@ -459,5 +462,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void updateLoginButton(String text){
         menuItem.setTitle(text);
+    }
+
+    private void loadLinkedFiles(){
+         /* Get firestore instance */
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+        firebaseFirestore.collection("users").document(MainActivity.activeUser.email).collection("files").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot document : task.getResult()){
+                                MainActivity.activeUser.linkedFiles.add(document.get("name").toString());
+                            }
+                        }
+                    }
+                });
     }
 }

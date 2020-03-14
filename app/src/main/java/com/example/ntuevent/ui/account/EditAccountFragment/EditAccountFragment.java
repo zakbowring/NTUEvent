@@ -311,7 +311,7 @@ public class EditAccountFragment extends Fragment implements View.OnClickListene
 
                     /* Add Path to the database */
                     /* Get Firebase Instance */
-                    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+                    final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
                     /* Create map of new data */
                     Map<String, Object> contents = new HashMap<>();
@@ -324,6 +324,16 @@ public class EditAccountFragment extends Fragment implements View.OnClickListene
                         public void onSuccess(Void aVoid) {
                             /* Add new file to active user */
                             MainActivity.activeUser.linkedFiles.add(finalFileName);
+
+                            /* Add file url separately to the user */
+                            firebaseFirestore.collection("users").document(MainActivity.activeUser.email)
+                                    .update("filesUrl", "userFiles/" + MainActivity.activeUser.email + "/")
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                        }
+                                    });
                         }
                     });
                 }

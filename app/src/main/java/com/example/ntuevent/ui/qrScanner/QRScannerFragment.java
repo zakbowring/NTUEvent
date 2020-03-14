@@ -173,7 +173,7 @@ public class QRScannerFragment extends Fragment implements View.OnClickListener 
         getCompanyUrl(event, companyName);
     }
 
-    private void getCompanyUrl(String event, final String companyName){
+    private void getCompanyUrl(final String event, final String companyName){
         /* Create firestore reference */
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -189,7 +189,9 @@ public class QRScannerFragment extends Fragment implements View.OnClickListener 
                                 Map<String, Object> eventData = document.getData();
 
                                 /* If stallholder is the same as the one from the QR */
-                                if(document.get("companyName").toString().equals(companyName)){
+                                String test = eventData.get("companyName").toString();
+                                String test2 = companyName;
+                                if(eventData.get("companyName").toString().equals(companyName)){
                                     /* Get the companies file directory */
                                     companyUrl = document.get("filesUrl").toString();
 
@@ -298,7 +300,7 @@ public class QRScannerFragment extends Fragment implements View.OnClickListener 
             final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
             /* Get a storage reference for the url location  */
-            final StorageReference storageReference = firebaseStorage.getReferenceFromUrl(fileUrls.get(i));
+            final StorageReference storageReference = firebaseStorage.getReference(fileUrls.get(i));
 
             /* Create a temp local file location to download the file to */
             File localFile = null;
@@ -335,7 +337,7 @@ public class QRScannerFragment extends Fragment implements View.OnClickListener 
                             filesTransferred++;
 
                             /* Check to see if all files transferred */
-                            if(filesTransferred == fileNames.size()) {
+                            if(filesTransferred == fileUrls.size()) {
                                 /* Dismiss popup window */
                                 fileTransferPopup.dismiss();
                                 Toast.makeText(getContext(), "Files Successfully transferred", Toast.LENGTH_SHORT).show();

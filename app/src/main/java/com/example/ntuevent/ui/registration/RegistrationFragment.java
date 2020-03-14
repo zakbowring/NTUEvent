@@ -62,7 +62,9 @@ public class RegistrationFragment extends Fragment implements BeaconConsumer, Vi
             }
         });
 
-        checkIfUserAlreadyRegistered();
+        /* If active user isn't empty */
+        if(MainActivity.activeUser != null)
+            checkIfUserAlreadyRegistered();
 
         /* Registers user by beacon */
         if (MainActivity.activeUser != null) {
@@ -284,41 +286,43 @@ public class RegistrationFragment extends Fragment implements BeaconConsumer, Vi
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         /* If contents returned */
+                        if (task.isSuccessful()) {
 
-                        String tempEventName = "";
-                        String tempEventId = "";
+                            String tempEventName = "";
+                            String tempEventId = "";
 
-                        /* Will only ever be one contents returned */
-                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                            tempEventId = documentSnapshot.get("eventId").toString();
-                            tempEventName = documentSnapshot.get("eventName").toString();
-                        }
+                            /* Will only ever be one contents returned */
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                tempEventId = documentSnapshot.get("eventId").toString();
+                                tempEventName = documentSnapshot.get("eventName").toString();
+                            }
 
-                        final String eventName = tempEventName;
-                        final String eventId = tempEventId;
+                            final String eventName = tempEventName;
+                            final String eventId = tempEventId;
 
-                        firebaseFirestore.collection("users").document(MainActivity.activeUser.email).collection("registeredEvents").get()
-                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                        boolean userRegistered = false;
+                            firebaseFirestore.collection("users").document(MainActivity.activeUser.email).collection("registeredEvents").get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            boolean userRegistered = false;
 
-                                        /* Look through every registered event */
-                                        for (QueryDocumentSnapshot document : task.getResult()) {
-                                            String tempEventId = document.get("eventId").toString();
-                                            if (document.get("eventId").toString().equals(eventId)) {
-                                                /* They're already registered */
-                                                userRegistered = true;
-                                                break;
+                                            /* Look through every registered event */
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                String tempEventId = document.get("eventId").toString();
+                                                if (document.get("eventId").toString().equals(eventId)) {
+                                                    /* They're already registered */
+                                                    userRegistered = true;
+                                                    break;
+                                                }
+                                            }
+
+                                            if (userRegistered == true) {
+                                                removeRegisterButton();
                                             }
                                         }
+                                    });
 
-                                        if (userRegistered == true) {
-                                            removeRegisterButton();
-                                        }
-                                    }
-                                });
-
+                        }
                     }
                 });
     }
