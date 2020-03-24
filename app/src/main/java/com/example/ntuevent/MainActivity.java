@@ -1,55 +1,35 @@
 package com.example.ntuevent;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 
-import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-//import android.app.FragmentTransaction;
-//import android.app.Fragment;
-
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.ntuevent.ui.events.Event.EventFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,18 +37,12 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,8 +60,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private PopupWindow accountPopupWindow;
     private PopupWindow signInPopupWindow;
     public PopupWindow registrationPopupWindow;
-    private LayoutInflater layoutInflater;
-    private RelativeLayout relativeLayout;
 
     /* User account */
     public static User activeUser;
@@ -315,10 +287,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
     }
 
-
-
-
-
     public void updateSideNavBarAccount(String username, String email, String profilePictureUrl) {
         /* Updates app when user signed in */
 
@@ -403,41 +371,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         account_Item.setEnabled(state);
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if( data.getData() != null && data != null && resultCode == RESULT_OK && requestCode == CHOOSE_IMAGE){
             /* Returns image URI */
             activeUser.uriProfilePicture = data.getData();
             activeUser.newProfilePictureUploaded = true;
-
-            /* Get image */
-//            try {
-//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), activeUser.uriProfilePicture);
-//
-//                /* Retrieve profile picture view */
-//                View accountView = findViewById(android.R.id.content).getRootView();
-//                ImageView imageView = (ImageView)accountView.findViewById(R.id.account_profile_picture);
-//
-//                /* Set new profile picture on fragment */
-//                imageView.setImageBitmap(bitmap);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
         }
 
         super.onActivityResult(requestCode,resultCode,data);
-    }
-
-    public User retrieveActiveUser(List<Type> results){
-        User tempUser = new User(this);
-
-        return tempUser;
-    }
-
-    public static int getEventFragmentContainerID()
-    {
-        return R.id.event_fragment_container;
     }
 
     @Override

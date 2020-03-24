@@ -355,7 +355,7 @@ public class QRScannerFragment extends Fragment implements View.OnClickListener 
     }
 
     /* Resets all variables */
-    private void reset() {
+    public void reset() {
         filesTransferred = 0;
         fileNames = new ArrayList<>();
         fileUrls = new ArrayList<>();

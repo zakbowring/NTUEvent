@@ -10,10 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
-import androidx.core.app.ComponentActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -122,6 +120,8 @@ public class EventsFragment extends Fragment {
 
                                 final long ONE_MEGABYTE = 1024 * 1024;
 
+                                final int k = i;
+
                                 /* Listener for getting image bytes */
                                 firebaseStorage.getBytes(ONE_MEGABYTE)
                                         .addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -157,6 +157,7 @@ public class EventsFragment extends Fragment {
                                                     lView = (ListView) view.findViewById(R.id.listview);
                                                     lAdapter = new ListAdapter(getContext(), events);
                                                     lView.setAdapter(lAdapter);
+                                                    lView.setContentDescription("Picture of the " + events.get(k).name);
 
                                                     lView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                                         @Override

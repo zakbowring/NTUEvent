@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -14,26 +13,20 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.ntuevent.Event;
-import com.example.ntuevent.ListAdapter;
-//import com.example.ntuevent.ListAdapterStallholders;
 import com.example.ntuevent.R;
 import com.example.ntuevent.Stallholder;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,12 +39,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 
 public class EventFragment extends Fragment implements View.OnClickListener {
 
@@ -157,6 +147,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
                                                         ImageView imageView = finalView.findViewById(R.id.event_image);
                                                         imageView.setImageBitmap(event.eventImage);
+                                                        imageView.setContentDescription("Picture of the " + event.name + " event");
 
                                                         TextView eventInformationTextView = finalView.findViewById(R.id.event_information);
                                                         eventInformationTextView.setText(event.eventInformation);
@@ -266,6 +257,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                                                                                     tempTextView.setId(R.id.stallholder_text);
 
                                                                                     tempTextView.setTextColor(Color.parseColor("#000000"));
+                                                                                    tempTextView.setContentDescription("Picture showing the " + event.stallholders.get(i).companyName + "stallholder");
                                                                                     tempLinearLayout.addView(tempTextView);
 
                                                                                     tempLinearLayout.setOnClickListener(new View.OnClickListener() {

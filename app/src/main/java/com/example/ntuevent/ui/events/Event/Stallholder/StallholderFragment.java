@@ -99,6 +99,7 @@ public class StallholderFragment extends Fragment {
 
                                 ImageView stallholderImageView = finalView.findViewById(R.id.stallholder_fragment_image);
                                 stallholderImageView.setImageBitmap(stallholder.stallholderImage);
+                                stallholderImageView.setContentDescription("Picture of the " + stallholder.companyName + " stallholder");
 
                                 TextView stallholderInformationTextView = finalView.findViewById(R.id.stallholder_fragment_information);
                                 stallholderInformationTextView.setText(stallholder.stallholderInformation);

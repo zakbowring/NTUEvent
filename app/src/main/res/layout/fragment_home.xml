@@ -28,7 +28,8 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/home_image"
         android:layout_gravity="center"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:contentDescription="A picture of Nottingham Trent University"/>
 
     <TextView
         android:layout_width="wrap_content"

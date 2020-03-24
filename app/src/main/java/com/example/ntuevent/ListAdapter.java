@@ -14,7 +14,7 @@ import java.util.List;
 public class ListAdapter extends BaseAdapter {
 
     Context context;
-    private final List<Event> events;
+    public final List<Event> events;
 
     public ListAdapter(Context context, List<Event> eventsList) {
         this.context = context;
@@ -72,7 +72,7 @@ public class ListAdapter extends BaseAdapter {
     }
 
     /* Creates text to go below image in ListView */
-    private String createEventText(Event event){
+    public String createEventText(Event event){
         String eventDate = new SimpleDateFormat("dd MMM yyyy").format(event.date);
 
         String eventText = eventDate + " - " + event.name;
